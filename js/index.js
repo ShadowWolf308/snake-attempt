@@ -42,7 +42,7 @@ function gameStart() {
         }
         if (down && head.direction != "up") {
             head.direction = "down"
-    }
+        }
         if (left && head.direction != "right") {
             head.direction = "left"
         }
@@ -54,32 +54,54 @@ function gameStart() {
         left = false
         right = false
         head.move()
-        for (i=0;i<snakeParts.lenght;i++) {
-            if (snakeParts[i] == 0){
-                if (head.direction != snakeParts[i].direction) {
-                    snakeParts[i].direction = head.direction
+        for (i=0;i<snakeParts.length;i++) {
+            snakeParts[i].move()
+            if (head.direction != snakeParts[0].direction) {
+                snakeParts[0].direction = head.direction
+            }
+            var a = i-1
+            if (snakeParts.length != 1){
+                if (snakeParts[a].backupDirection != snakeParts[i].direction) {
+                    snakeParts[i].direction = snakeParts[a].backupDirection
                 }
+            }
+            if (snakeParts.length == 1) {
+                snakeParts[i].backupDirection = snakeParts[i].direction
+            }
+            if (snakeParts.length > 1) {
+                snakeParts[a].backupDirection = snakeParts[a].direction
             }
         }
     }
     function newSnakePart() {
         if (snakeParts.length == 0){
             if (head.direction == "up") {
-                snakeParts.push(new snake(head.direction,head.x,head.y+blocksize))
+                snakeParts.push(new snake("up",head.x,head.y+blocksize,"up"))
             }
             if (head.direction == "down") {
-                snakeParts.push(new snake(head.direction,head.x,head.y-blocksize))
+                snakeParts.push(new snake("down",head.x,head.y-blocksize,"down"))
             }
             if (head.direction == "left") {
-                snakeParts.push(new snake(head.direction,head.x+blocksize,head.y))
+                snakeParts.push(new snake("left",head.x+blocksize,head.y,"left"))
             }
             if (head.direction == "right") {
-                snakeParts.push(new snake(head.direction,head.x-blocksize,head.y))
+                snakeParts.push(new snake("right",head.x-blocksize,head.y,"right"))
             }
             console.log(head.x + " " + head.y + " " + snakeParts[0].x + " " + snakeParts[0].y)
         }else{
             var a = snakeParts.length-1
-            snakeParts.push(new snake(snakeParts[a],snakeParts[a]))
+            if (snakeParts[a].direction == "up") {
+                snakeParts.push(new snake("up",snakeParts[a].x,snakeParts[a].y+blocksize,"up"))
+            }
+            if (snakeParts[a].direction == "down") {
+                snakeParts.push(new snake("down",snakeParts[a].x,snakeParts[a].y-blocksize,"down"))
+            }
+            if (snakeParts[a].direction == "left") {
+                snakeParts.push(new snake("left",snakeParts[a].x+blocksize,snakeParts[a].y,"left"))
+            }
+            if (snakeParts[a].direction == "right") {
+                snakeParts.push(new snake("right",snakeParts[a].x-blocksize,snakeParts[a].y,"right"))
+            }
         }
     }
     function draw() {
@@ -89,7 +111,7 @@ function gameStart() {
         ctx.fillRect(0,0,canvas.width,canvas.height);
         ctx.closePath();
         ctx.beginPath();
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = "#dddddd";
         ctx.fillRect(0,19,canvas.width,2);
         ctx.fillRect(0,39,canvas.width,2);
         ctx.fillRect(0,59,canvas.width,2);
@@ -173,15 +195,16 @@ function gameStart() {
         ctx.beginPath();
         ctx.fillStyle = "red";
         ctx.fillRect(food.x,food.y,blocksize,blocksize);
+        ctx.strokeStyle = "#990000";
         ctx.strokeRect(food.x,food.y,blocksize,blocksize);
         ctx.closePath();
         ctx.beginPath();
-        ctx.fillStyle = "#00ff00";
+        ctx.fillStyle = "#00dd00";
         ctx.fillRect(head.x,head.y,blocksize,blocksize);
         ctx.closePath();
         for(i=0;i<snakeParts.length;i++) {
             ctx.beginPath();
-            ctx.fillStyle = "#00ff00";
+            ctx.fillStyle = "#00dd00";
             ctx.fillRect(snakeParts[i].x,snakeParts[i].y,blocksize,blocksize);
             ctx.closePath();
         }

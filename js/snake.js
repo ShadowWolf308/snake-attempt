@@ -1,12 +1,14 @@
 var blocksize = 20
 class snake {
+    backupDirection;
     direction;
     x;
     y;
-    constructor(direction,x,y) {
+    constructor(direction,x,y,backupDirection) {
         this.direction = direction;
         this.x = x;
         this.y = y;
+        this.backupDirection = backupDirection;
     };
     move(){
         if(this.direction == "left"){
@@ -31,7 +33,7 @@ class snakeHead {
         this.direction = direction;
         this.x = x;
         this.y = y;
-    }
+    };
     move(){
         if(this.direction == "left"){
             this.x -= blocksize
