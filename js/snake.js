@@ -4,11 +4,13 @@ class snake {
     direction;
     x;
     y;
-    constructor(direction,x,y,backupDirection) {
+    color;
+    constructor(direction,x,y,backupDirection,color) {
         this.direction = direction;
         this.x = x;
         this.y = y;
         this.backupDirection = backupDirection;
+        this.color = color;
     };
     move(){
         if(this.direction == "left"){

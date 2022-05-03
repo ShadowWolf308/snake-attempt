@@ -3,11 +3,12 @@ var up = false
 var down = false
 var left = false
 var right = false
+var press = false
 window.addEventListener("keydown",function(e){
-    if (e.keyCode == 87 || e.keyCode == 87) {up = true}
-    if (e.keyCode == 83 || e.keyCode == 83) {down = true}
-    if (e.keyCode == 65 || e.keyCode == 65) {left=true}
-    if (e.keyCode == 68 || e.keyCode == 68) {right=true}
+    if ((e.keyCode == 87 || e.keyCode == 38) && !press) {up = true;press=true}
+    if ((e.keyCode == 83 || e.keyCode == 40) && !press) {down = true;press=true}
+    if ((e.keyCode == 65 || e.keyCode == 37) && !press) {left=true;press=true}
+    if ((e.keyCode == 68 || e.keyCode == 39) && !press) {right=true;press=true}
 })
 var blocksize = 20
 function gameStart() {
@@ -60,48 +61,51 @@ function gameStart() {
                 snakeParts[0].direction = head.direction
             }
             var a = i-1
-            if (snakeParts.length != 1){
+            if (i != 0){
                 if (snakeParts[a].backupDirection != snakeParts[i].direction) {
                     snakeParts[i].direction = snakeParts[a].backupDirection
                 }
             }
-            if (snakeParts.length == 1) {
-                snakeParts[i].backupDirection = snakeParts[i].direction
-            }
-            if (snakeParts.length > 1) {
-                snakeParts[a].backupDirection = snakeParts[a].direction
-            }
+        }
+        for (i=0;i<snakeParts.length;i++) {
+            snakeParts[i].backupDirection = snakeParts[i].direction
         }
     }
+    var color = "#00cc00"
     function newSnakePart() {
         if (snakeParts.length == 0){
             if (head.direction == "up") {
-                snakeParts.push(new snake("up",head.x,head.y+blocksize,"up"))
+                snakeParts.push(new snake("up",head.x,head.y+blocksize,"up",color))
             }
             if (head.direction == "down") {
-                snakeParts.push(new snake("down",head.x,head.y-blocksize,"down"))
+                snakeParts.push(new snake("down",head.x,head.y-blocksize,"down",color))
             }
             if (head.direction == "left") {
-                snakeParts.push(new snake("left",head.x+blocksize,head.y,"left"))
+                snakeParts.push(new snake("left",head.x+blocksize,head.y,"left",color))
             }
             if (head.direction == "right") {
-                snakeParts.push(new snake("right",head.x-blocksize,head.y,"right"))
+                snakeParts.push(new snake("right",head.x-blocksize,head.y,"right",color))
             }
             console.log(head.x + " " + head.y + " " + snakeParts[0].x + " " + snakeParts[0].y)
         }else{
             var a = snakeParts.length-1
             if (snakeParts[a].direction == "up") {
-                snakeParts.push(new snake("up",snakeParts[a].x,snakeParts[a].y+blocksize,"up"))
+                snakeParts.push(new snake("up",snakeParts[a].x,snakeParts[a].y+blocksize,"up",color))
             }
             if (snakeParts[a].direction == "down") {
-                snakeParts.push(new snake("down",snakeParts[a].x,snakeParts[a].y-blocksize,"down"))
+                snakeParts.push(new snake("down",snakeParts[a].x,snakeParts[a].y-blocksize,"down",color))
             }
             if (snakeParts[a].direction == "left") {
-                snakeParts.push(new snake("left",snakeParts[a].x+blocksize,snakeParts[a].y,"left"))
+                snakeParts.push(new snake("left",snakeParts[a].x+blocksize,snakeParts[a].y,"left",color))
             }
             if (snakeParts[a].direction == "right") {
-                snakeParts.push(new snake("right",snakeParts[a].x-blocksize,snakeParts[a].y,"right"))
+                snakeParts.push(new snake("right",snakeParts[a].x-blocksize,snakeParts[a].y,"right",color))
             }
+        }
+        if (color == "#00ee00") {
+            color = "#00cc00"
+        } else if (color == "#00cc00") {
+            color = "#00ee00"
         }
     }
     function draw() {
@@ -199,14 +203,28 @@ function gameStart() {
         ctx.strokeRect(food.x,food.y,blocksize,blocksize);
         ctx.closePath();
         ctx.beginPath();
-        ctx.fillStyle = "#00dd00";
+        ctx.fillStyle = "#ff5555";
         ctx.fillRect(head.x,head.y,blocksize,blocksize);
         ctx.closePath();
         for(i=0;i<snakeParts.length;i++) {
             ctx.beginPath();
-            ctx.fillStyle = "#00dd00";
+            ctx.fillStyle = snakeParts[i].color;
             ctx.fillRect(snakeParts[i].x,snakeParts[i].y,blocksize,blocksize);
             ctx.closePath();
+        }
+    }
+    function deathCheck() {
+        for (i=0;i<snakeParts.length;i++) {
+            if (head.x == snakeParts[i].x && head.y == snakeParts[i].y) {
+                alive = false
+                death = true
+                console.log("dead")
+            }
+        }
+        if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+            alive = false
+            death = true
+            console.log("dead")
         }
     }
     function aliveCheck() {
@@ -216,7 +234,9 @@ function gameStart() {
                 newSnakePart()
                 console.log(snakeParts.length)
             }
-            draw()
+            deathCheck()
+            if (!death)draw()
+            press = false
         }
     }
     aliveCheck()
