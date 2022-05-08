@@ -24,12 +24,24 @@ function gameStart() {
     var head = new snakeHead("up",500,300)
     function spawnFood() {
         var x = Math.floor(Math.random()*canvas.width)
+        var y = Math.floor(Math.random()*canvas.height)
         while ((x % blocksize != 0)) {
             x = Math.floor(Math.random()*canvas.width)
         }
-        var y = Math.floor(Math.random()*canvas.height)
         while ((y % blocksize != 0)) {
             y = Math.floor(Math.random()*canvas.height)
+        }
+        for (i=0;i<snakeParts.length;i++) {
+            if ((y == snakeParts[i].y) && (x == snakeParts[i].x)) {
+                var x = Math.floor(Math.random()*canvas.width)
+                var y = Math.floor(Math.random()*canvas.height)
+                while ((x % blocksize != 0)) {
+                    x = Math.floor(Math.random()*canvas.width)
+                }
+                while ((y % blocksize != 0)) {
+                    y = Math.floor(Math.random()*canvas.height)
+                }
+            }
         }
         food.x = x
         food.y = y
@@ -213,18 +225,27 @@ function gameStart() {
             ctx.closePath();
         }
     }
+    function dead() {
+        ctx.beginPath()
+        ctx.fillStyle = "#ff000033"
+        ctx.fillRect(0,0,canvas.width,canvas.height)
+        ctx.closePath()
+        document.getElementById('dead').style.display = "grid"
+    }
     function deathCheck() {
         for (i=0;i<snakeParts.length;i++) {
             if (head.x == snakeParts[i].x && head.y == snakeParts[i].y) {
                 alive = false
                 death = true
                 console.log("dead")
+                dead()
             }
         }
         if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
             alive = false
             death = true
             console.log("dead")
+            dead()
         }
     }
     function aliveCheck() {
@@ -239,10 +260,11 @@ function gameStart() {
             press = false
         }
     }
+    var time = 500
     aliveCheck()
     setTimeout(x,1)
-    setInterval(snakeMove,600)
+    setInterval(snakeMove,time)
     function x() {
-        setInterval(aliveCheck,600)
+        setInterval(aliveCheck,time)
     }
 }
