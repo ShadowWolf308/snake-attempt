@@ -8,12 +8,19 @@ canvas {
     left: calc(100vw / 2 - 500px);
     top: calc(100vh / 2 - 300px);
 }
-button {
+#start {
     width: 50px;
     height: 22px;
     position: absolute;
     left: calc(100vw / 2 - 25px);
-    top: calc(100vh / 2 - 11px);
+    top: calc(100vh / 2 + 25px);
+}
+#aiStart {
+    width: 100px;
+    height: 22px;
+    position: absolute;
+    left: calc(100vw / 2 - 50px);
+    top: calc(100vh / 2 - 25px);
 }
 p {
     color: black;
