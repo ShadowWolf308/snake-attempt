@@ -1,1 +1,110 @@
-@charset "utf-8";html{background-color:black;}canvas{background-color:black;position:absolute;left:calc(100vw / 2 - 500px);top:calc(100vh / 2 - 300px);}#start{width:40px;height:22px;position:absolute;left:calc(100vw / 2 - 20px);top:calc(100vh / 2 + 25px);}p{color:black;text-align:center;font-size:20px;}h1{color:black;text-align:center;font-size:50px;}#dead{display:none;position:absolute;height:240px;width:250px;left:calc(100vw / 2 - 125px);top:calc(100vh / 2 - 120px);}#git{color:white;text-align:center;width:100px;height:22px;position:absolute;left:calc(100vw / 2 - 50px);top:calc(100vh / 2 - 25px);}#snake,#reclame{color:white;}h2{color:white;text-align:center;font-size:20px;}#start1{width:60px;height:22px;position:absolute;left:calc(100vw / 2 - 30px);top:calc(100vh / 2 + 50px);}#start2{width:42px;height:22px;position:absolute;left:calc(100vw / 2 - 21px);top:calc(100vh / 2 + 75px);}#score{position:absolute;color:white;display:none;top:83.5vh;left:calc(17vw + 1vh / 2);font-size:50px;}#scoreNum{position:absolute;color:white;display:none;top:84vh;left:26vw;font-size:50px;}#reset{position:absolute;left:105px;top:35vh;}#game {display:none;}#died{font-size:50px;}
+@charset "utf-8";
+
+html {
+    background-color: black;
+}
+
+canvas {
+    background-color: black;
+    position: absolute;
+    left: calc(100vw / 2 - 500px);
+    top: calc(100vh / 2 - 300px);
+}
+
+#start {
+    width: 40px;
+    height: 22px;
+    position: absolute;
+    left: calc(100vw / 2 - 20px);
+    top: calc(100vh / 2 + 25px);
+}
+
+p {
+    color: black;
+    text-align: center;
+    font-size: 20px;
+}
+
+h1 {
+    color: black;
+    text-align: center;
+    font-size: 50px;
+}
+
+#dead {
+    display: none;
+    position: absolute;
+    height: 240px;
+    width: 250px;
+    left: calc(100vw / 2 - 125px);
+    top: calc(100vh / 2 - 120px);
+}
+
+#git {
+    color: white;
+    text-align: center;
+    width: 100px;
+    height: 22px;
+    position: absolute;
+    left: calc(100vw / 2 - 50px);
+    top: calc(100vh / 2 - 25px);
+}
+
+#snake,
+#reclame {
+    color: white;
+}
+
+h2 {
+    color: white;
+    text-align: center;
+    font-size: 20px;
+}
+
+#start1 {
+    width: 60px;
+    height: 22px;
+    position: absolute;
+    left: calc(100vw / 2 - 30px);
+    top: calc(100vh / 2 + 50px);
+}
+
+#start2 {
+    width: 42px;
+    height: 22px;
+    position: absolute;
+    left: calc(100vw / 2 - 21px);
+    top: calc(100vh / 2 + 75px);
+}
+
+#score {
+    position: absolute;
+    color: white;
+    display: none;
+    top: 83.5vh;
+    left: calc(17vw + 1vh / 2);
+    font-size: 50px;
+}
+
+#scoreNum {
+    position: absolute;
+    color: white;
+    display: none;
+    top: 84vh;
+    left: 26vw;
+    font-size: 50px;
+}
+
+#reset {
+    position: absolute;
+    left: 105px;
+    top: 35vh;
+}
+
+#game {
+    display: none;
+}
+
+#died {
+    font-size: 50px;
+}
